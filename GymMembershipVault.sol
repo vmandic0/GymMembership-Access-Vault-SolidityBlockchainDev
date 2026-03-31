@@ -26,4 +26,13 @@ contract GymMembershipVault {
         emit MembershipPurchased(msg.sender, msg.value);
     }
 
+    function withdrawFunds() external {
+        require(msg.sender == owner, "Samo vlasnik moze povuci sredstva.");
+        uint256 balance = address(this).balance;
+        require(balance > 0, "Nema dostupnih sredstava.");
+
+        (bool success, ) = payable(owner).call{value: balance}("");
+        require(success, "Transfer nije uspeo");
+    }
+
 }
