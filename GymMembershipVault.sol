@@ -35,4 +35,8 @@ contract GymMembershipVault {
         require(success, "Transfer nije uspeo");
     }
 
+    function checkMembershipStatus(address _user) public view returns (bool) {
+        return isMember[_user];
+    }
+
 }
