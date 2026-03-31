@@ -15,4 +15,15 @@ contract GymMembershipVault {
     constructor() {
         owner = msg.sender;
     }
+    
+    event MembershipPurchased(address indexed member, uint256 amount);
+
+    function buyMembership() public payable {
+        require(msg.value == membershipPrice, "Morate poslati tacno 0.01 ETH.");
+        require(!isMember[msg.sender], "Korisnik je vec aktivni clan.");
+
+        isMember[msg.sender] = true;
+        emit MembershipPurchased(msg.sender, msg.value);
+    }
+
 }
